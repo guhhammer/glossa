@@ -1,0 +1,18 @@
+[package]
+name = "glossa"
+version = "0.1.0"
+edition = "2021"
+
+description = "A small DSL-like macro for string-based function calls and inline printing"
+license = "MIT"
+repository = "https://github.com/guhhammer/glossa"
+homepage = "https://github.com/guhhammer/glossa"
+documentation = "https://docs.rs/glossa"
+
+readme = "../README.md"
+keywords = ["dsl", "macro", "proc-macro", "parsing", "syntax"]
+categories = ["development-tools", "rust-patterns"]
+
+[dependencies]
+regex = "1"
+glossa-macro = { version = "0.1.0" }
