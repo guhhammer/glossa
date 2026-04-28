@@ -1,13 +1,13 @@
-Here’s your **full updated README.md** with the string literal system correctly elevated as a core feature and integrated cleanly with the rest of the design.
+Here’s a **cleaned + crates.io-ready README.md** version of your project (with correct crate usage, consistent naming, and no broken assumptions).
 
 ---
 
-````md id="readme_final"
-# 🌿 glossa
+````md
+# 🌿 glossa-lang
 
 A lightweight DSL toolkit for expressive function pipelines in Rust.
 
-`glossa` provides a macro-based system that enables pipeline-style composition using `>>`, combined with a string-literal-driven DSL inside `#[glossa]` functions.
+`glossa-lang` provides a macro-based system that enables pipeline-style composition using `>>`, combined with a string-literal-driven DSL inside `#[glossa]` functions.
 
 It is designed for expressive functional pipelines and lightweight scripting-style Rust.
 
@@ -17,17 +17,30 @@ It is designed for expressive functional pipelines and lightweight scripting-sty
 
 glossa transforms two things:
 
-1. **Function pipelines**
-2. **String literal DSL inside functions**
+1. Function pipelines (`>>`)
+2. String literal DSL inside `#[glossa]`
 
 into a unified expressive layer.
 
 ---
 
-## 🚀 Example
+## 🚀 Installation
+
+```toml
+[dependencies]
+glossa-lang = "0.1"
+````
 
 ```rust
-use glossa::prelude::*;
+use glossa_lang::prelude::*;
+```
+
+---
+
+## ⚡ Example
+
+```rust
+use glossa_lang::prelude::*;
 
 fn sum(a: u8, b: u8) -> u8 { a + b }
 fn double(x: u8) -> u8 { x * 2 }
@@ -39,86 +52,64 @@ fn main() {
 
     "hello world";
 }
-````
+```
 
 ---
 
 ## 🧵 String Literal DSL (Core Feature)
 
-Inside `#[glossa]`, standalone string literals are **interpreted, not ignored**.
-
-They become output instructions depending on prefix rules.
+Inside `#[glossa]`, standalone string literals become output instructions.
 
 ---
 
-### Default output
+### Default print
 
-```rust id="k7v8xq"
+```rust
 "hello world";
 ```
 
-➡ expands to:
-
-```rust id="p9r2wa"
-println!("hello world");
+```text
+hello world
 ```
 
 ---
 
 ### `n:` → no newline print
 
-```rust id="3j9qtw"
+```rust
 "n:hello";
 ```
 
-➡ expands to:
-
-```rust id="8v1xkc"
-print!("hello");
+```text
+hello
 ```
 
 ---
 
 ### `e:` → stderr output
 
-```rust id="d1m7sp"
+```rust
 "e:failure";
-```
-
-➡ expands to:
-
-```rust id="q0xv8n"
-eprintln!("failure");
 ```
 
 ---
 
-### `f:` → formatted print
+### `f:` → formatted output
 
-```rust id="x7n2lm"
+```rust
 let x = 10;
 "f:value = {x}";
-```
-
-➡ expands to:
-
-```rust id="r8k4pd"
-println!("value = {x}");
 ```
 
 ---
 
 ### `!` → escape DSL parsing
 
-```rust id="c9v1aa"
+```rust
 "!raw output";
 ```
 
-➡ expands to:
-
-```rust id="m4t7pz"
-println!("raw output");
-```
+➡ bypasses DSL processing
 
 ---
 
@@ -126,7 +117,7 @@ println!("raw output");
 
 ### Basic pipeline
 
-```rust id="g1q9tx"
+```rust
 "10,20" >> sum >> double;
 ```
 
@@ -134,7 +125,7 @@ println!("raw output");
 
 ### Inline execution
 
-```rust id="v7k2lm"
+```rust
 "10,20" >> sum >> double >> print;
 ```
 
@@ -142,7 +133,7 @@ println!("raw output");
 
 ### Partial application
 
-```rust id="b8n4qp"
+```rust
 "10,20" >> sum >> add(5) >> print;
 "10,20" >> sum >> add(__, 5) >> print;
 ```
@@ -151,7 +142,7 @@ println!("raw output");
 
 ### Closures in pipeline
 
-```rust id="z2k9wa"
+```rust
 "10,20" >> sum >> (|x| x * 2) >> print;
 ```
 
@@ -161,7 +152,7 @@ println!("raw output");
 
 ### Composition
 
-```rust id="c1x9lm"
+```rust
 let f = compose!(add(5), double);
 println!("{}", f(10));
 ```
@@ -170,7 +161,7 @@ println!("{}", f(10));
 
 ### Pipeline builder
 
-```rust id="p6k2zn"
+```rust
 let f = pipe!(|a, b, c| sum2 >> double >> print);
 f(10, 20, 30);
 ```
@@ -179,7 +170,7 @@ f(10, 20, 30);
 
 ### Reusable pipelines
 
-```rust id="t8v1qk"
+```rust
 let f = glossa_fn!(|x, y| add >> double >> print);
 f(10, 20);
 ```
@@ -188,7 +179,7 @@ f(10, 20);
 
 ## 🧠 Design Philosophy
 
-glossa is:
+glossa-lang is:
 
 * macro-driven
 * expressive-first
@@ -203,10 +194,10 @@ It does NOT aim to replace Rust’s type system.
 
 ```
 glossa/
-├── glossa/          core library
+├── glossa/          core library (public crate)
 ├── glossa-macro/    procedural macros
 ├── tests/           integration tests
-├── docs/            documentation & showcase
+├── docs/            showcase + docs
 ```
 
 ---
@@ -245,7 +236,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
 ```
- 
+
 ---
